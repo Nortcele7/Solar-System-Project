@@ -1,0 +1,3 @@
+/home/shreyam/Desktop/graphics-project/build/CMakeFiles/solar_system.dir
+/home/shreyam/Desktop/graphics-project/build/CMakeFiles/edit_cache.dir
+/home/shreyam/Desktop/graphics-project/build/CMakeFiles/rebuild_cache.dir

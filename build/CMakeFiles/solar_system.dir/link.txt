@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/solar_system.dir/src/main.cpp.o -o solar_system  /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libglfw.so.3.3 /usr/lib/x86_64-linux-gnu/libGLEW.so 
