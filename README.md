@@ -1,6 +1,6 @@
 # Interactive Solar Sytem Simulator | SSS
 
-This project is a real-time 3D solar-system simulator built using modern OpenGL (core profile) in C++.
+This project is a real-time 3D solar-system simulator built using modern OpenGL in C++.
 
 This README keeps only concepts that are used or partially used in this project.
 
@@ -181,3 +181,5 @@ make
 ```bash
 ./solar_system
 ```
+
+### Made By Shreyam, Shubham, Sanskar
