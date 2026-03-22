@@ -3,6 +3,7 @@
 This project is a real-time 3D solar-system simulator built using modern OpenGL in C++.
 
 This README keeps only concepts that are used or partially used in this project.
+This is the new line
 
 ## 1. Introduction and Application
 
