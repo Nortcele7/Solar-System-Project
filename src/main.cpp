@@ -1,6 +1,6 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include <GL/glew.h>  // Loads OPENGL extensions
+#include <GLFW/glfw3.h> // window create garcha ra input handle garcha
+#include <glm/glm.hpp> // Provides math i.e vectors and matrices
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -21,8 +21,11 @@
 #include "../include/Sphere.h"
 
 namespace {
-constexpr float PI = 3.14159265359f;
+constexpr float PI = 3.14159265359f;   
 constexpr float TWO_PI = 6.28318530718f;
+
+// Vertex and Fragment shader 
+// 4 ota shader pins cha each living as a raw string in C++
 
 const char* kBodyVertexShader = R"(
 #version 330 core
@@ -91,6 +94,8 @@ void main() {
 }
 )";
 
+// Line Shaders are basically used to draw elliptical orbits of planets and moons
+
 const char* kLineVertexShader = R"(
 #version 330 core
 layout (location = 0) in vec3 aPos;
@@ -113,6 +118,8 @@ void main() {
     FragColor = vec4(lineColor, 1.0);
 }
 )";
+
+// Point shader chai asteroid belt, kuiper belt, starfield ma use huncha to render points as small glowing dots in space
 
 const char* kPointVertexShader = R"(
 #version 330 core
@@ -138,6 +145,20 @@ void main() {
 }
 )";
 
+// Body Shader
+
+// Body Vertex Shader : Transforms each vertex from object space to world space to clip space
+// Vertex shader uses model x view x projection pipeline
+
+// It passes the world position and surface  normal to the fragment shader
+
+/// Body Fragment Shader : Calculates the color of each pixel based on lighting and material properties
+// Jati pani planets ma hune lightning haru cha tyo sab Body Fragment Shader ma calculate huncha
+
+// Has a special case for Earth to create a procedural land/ocean pattern based on the vertex normal and an animation phase
+
+
+// This is a bit map based version of letters in which each pixel is turned on off based on the character. Yesle chai text rendering ma help garcha
 std::array<uint8_t, 7> GlyphPattern(char c) {
     switch (c) {
         case 'A': return {0x0E, 0x11, 0x11, 0x1F, 0x11, 0x11, 0x11};
@@ -273,12 +294,20 @@ struct RingVertex {
     glm::vec3 normal;
 };
 
+// Yo chai saturn ko rings create garna use huncha
+// XZ plane ma donut shape ring banaucha
+// Inner or Outer vertices around a circle banaucha
+// Tyo vertices lai triangles ma convert garcha with an index buffer
+// Then OPENGL renders it
+
 class RingMesh {
 public:
     RingMesh(float innerRadius, float outerRadius, int segments) {
         Generate(innerRadius, outerRadius, segments);
         Setup();
     }
+
+    // Destructor for OPENGL objects
 
     ~RingMesh() {
         glDeleteBuffers(1, &ebo_);
@@ -353,6 +382,9 @@ private:
     GLuint ebo_ = 0;
 };
 
+// Contains data for each celestial body. Contains orbital state and animation too.
+// Yesle sabai planetes ko data store garera rakheko huncha
+
 struct CelestialBody {
     std::string name;
     std::string description;
@@ -360,7 +392,7 @@ struct CelestialBody {
     float orbitRadius;
     float orbitalPeriodDays;
     float rotationPeriodHours;
-    float axialTiltDeg;
+    float axialTiltDeg;  // Uranus ko lagi rotation axis tilt garcha its nearly 98 degrees
     float orbitInclinationDeg;
     float eccentricity;
     glm::vec3 color;
@@ -381,6 +413,8 @@ public:
         width_ = width;
         height_ = height;
 
+
+        // OpenGL context create garna GLFW use garcha. Yesle chai window create garcha ra input handle garcha
         if (!glfwInit()) {
             std::cerr << "Failed to initialize GLFW" << std::endl;
             return false;
@@ -797,6 +831,8 @@ private:
         if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window_, GLFW_TRUE);
         }
+        
+
 
         cameraPitch_ = glm::clamp(cameraPitch_, -85.0f, 85.0f);
         desiredCameraDistance_ = glm::clamp(desiredCameraDistance_, 3.0f, 180.0f);

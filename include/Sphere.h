@@ -18,6 +18,10 @@ public:
     std::vector<unsigned int> indices;
     unsigned int VAO, VBO, EBO;
 
+    // Sphere bhaneko yesma stacks + sectors ho
+    // Stacks = rings from bottom to top
+    // Sectors = slices around the sphere
+
     Sphere(float radius = 1.0f, int sectorCount = 36, int stackCount = 18) {
         generateSphere(radius, sectorCount, stackCount);
         setupMesh();
@@ -41,7 +45,7 @@ private:
         indices.clear();
 
         float x, y, z, xy;
-        float sectorStep = 2.0f * 3.14159f / sectorCount;
+        float sectorStep = 2.0f * 3.14159f / sectorCount;  // yo chai angle for each sector side slice ho
         float stackStep = 3.14159f / stackCount;
         float sectorAngle, stackAngle;
 
@@ -61,6 +65,7 @@ private:
             }
         }
 
+        // OPENGL Le triangles ko form ma render garna cha, so 3 vertices ko group ma index haru push garna parcha to make sphere otherwise it cannot as it renders only traingle
         unsigned int k1, k2;
         for (int i = 0; i < stackCount; ++i) {
             k1 = i * (sectorCount + 1);
@@ -77,6 +82,8 @@ private:
             }
         }
     }
+
+    // Yesle chai math lai CPU ko RAM bata Graphics Card ko memory ma halcha
 
     void setupMesh() {
         glGenVertexArrays(1, &VAO);
