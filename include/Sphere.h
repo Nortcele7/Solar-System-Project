@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstddef>
 
+// This is the sphere class
 class Sphere {
 public:
     struct Vertex {
